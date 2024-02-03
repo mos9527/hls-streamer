@@ -1,0 +1,59 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/video.js"></script>
+  <link href="css/video-js.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .video-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body />
+  <video id="player" class="video-js" controls preload="auto">
+  <script>
+  player = videojs('player', {
+    controls: true,
+    preload: 'auto',
+    autoplay: true,
+    fluid: true,
+    language: 'zh-CN',
+    muted: false,
+    inactivityTimeout: false,
+    controlBar: {
+      children: [
+        { name: 'playToggle' },
+        { name: 'progressControl' },
+        { name: 'currentTimeDisplay' },
+        {
+          name: 'playbackRateMenuButton',
+          'playbackRates': [0.5, 1, 1.5, 2, 2.5]
+        },
+        {
+          name: 'volumePanel',
+        },
+        { name: 'FullscreenToggle' }
+      ]
+    }
+  })
+  const urlParams = new URLSearchParams(decodeURIComponent(window.location.search))
+  let server = urlParams.get('server');
+  let app = urlParams.get('app');
+  let stream = urlParams.get('stream');
+  let url = `https://${server}/${app}/${stream}/${stream}.m3u8`;  
+  document.title = url;
+  player.src(url)
+  player.autoplay()
+  </script>
+</body>
